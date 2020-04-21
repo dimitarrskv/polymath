@@ -10,6 +10,7 @@ import Joi = require('@hapi/joi');
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
           .valid('dev', 'test', 'prod')
