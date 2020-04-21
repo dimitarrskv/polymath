@@ -14,8 +14,7 @@ export class LoginComponent implements OnInit {
   }
 
   googleLogin() {
-    this.authService.googleRedirect()
-      .then(() => this.authService.afterLogin());
+    this.authService.googleLogin()
   }
 
 }

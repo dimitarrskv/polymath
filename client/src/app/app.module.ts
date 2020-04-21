@@ -14,7 +14,6 @@ import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { LoginComponent } from './login/login.component';
-import { GoogleOauthCallbackComponent } from './login/google-oauth-callback/google-oauth-callback.component';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -31,8 +30,7 @@ export function jwtOptionsFactory() {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    GoogleOauthCallbackComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,

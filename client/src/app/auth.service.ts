@@ -21,34 +21,11 @@ export class AuthService {
     private configurations: ConfigurationService
   ) { }
 
-  googleRedirect(isLink: boolean = false) {
-    return new Promise((resolve, reject) => {
-        const baseUrl = this.configurations.googleOAuthUrl;
-        const redirectUri = this.configurations.clientBaseUrl +
-            '/google-oauth-callback';
-        let params = new HttpParams();
-            params = params.append('client_id', this.configurations.googleClientID);
-            params = params.append('response_type', 'token');
-            params = params.append('redirect_uri', redirectUri);
-            params = params.append('scope', 'email profile');
-
-        const uri = baseUrl + '?' + params.toString();
-        window.location.href = uri;
-    });
-  }
-
-  googleLogin(accessToken: string) {
-    return new Promise((resolve, reject) => {
-        return this.http.get(`${this.configurations.baseUrl}/auth/google?access_token=` + accessToken,
-            { observe: 'response' })
-            .toPromise()
-            .then(response => {
-                const token = response.headers.get('Authorization');
-                this.login(token);
-                resolve(response);
-            })
-            .catch(() => reject());
-        });
+  googleLogin() {
+    window.open(`${this.configurations.baseUrl}/auth/login/google-oauth`,"mywindow","location=1,status=1,scrollbars=1, width=800,height=800");
+    // let listener = window.addEventListener('message', (message) => {
+    //   //message will contain google user and details
+    // });
   }
 
   afterLogin() {
