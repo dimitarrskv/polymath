@@ -7,7 +7,7 @@ import { Strategy } from 'passport-google-oauth20';
 
 @Injectable()
 export class GoogleOAuthStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor(private moduleRef: ModuleRef, private configService: ConfigService) {
+  constructor(private moduleRef: ModuleRef, private configService: ConfigService, private authService: AuthService) {
     super({
       clientID: configService.get('GOOGLE_ID'),
       clientSecret: configService.get('GOOGLE_SECRET'),
@@ -17,18 +17,19 @@ export class GoogleOAuthStrategy extends PassportStrategy(Strategy, 'google') {
     });  
   }
 
-  async validate(
-    request: Request,
-    username: string,
-    password: string,
-  ) {
-    const contextId = ContextIdFactory.getByRequest(request);
-    // "AuthService" is a request-scoped provider
-    const authService = await this.moduleRef.resolve(AuthService, contextId);
-    const user = await authService.validateUser(username, password);
-    if (!user) {
-      throw new UnauthorizedException();
+  async validate(request: any, accessToken: string, refreshToken: string, profile, done: Function)
+    {
+      try
+      {
+        const jwt: string = await this.authService.validateOAuthLogin(profile.id, 'google');
+        const user = { jwt }
+
+        done(null, user);
+      }
+      catch(err)
+      {
+        console.log(err)
+        done(err, false);
+      }
     }
-    return user;
-  }
 }

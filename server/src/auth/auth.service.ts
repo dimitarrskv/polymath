@@ -1,13 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Provider, InternalServerErrorException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { sign } from 'jsonwebtoken';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private configService: ConfigService,
     private usersService: UsersService,
     private jwtService: JwtService
   ) {}
+
+  async validateOAuthLogin(thirdPartyId: string, provider: 'google'): Promise<string>
+    {
+        try 
+        {
+            // TODO: add some registration logic here, 
+            // to register the user using their thirdPartyId (in this case their googleId)
+            // let user: IUser = await this.usersService.findOneByThirdPartyId(thirdPartyId, provider);
+            // if (!user)
+                // user = await this.usersService.registerOAuthUser(thirdPartyId, provider);
+                
+            const payload = { thirdPartyId, provider }
+
+            const jwt: string = sign(payload, this.configService.get('JWT_SECRET'), { expiresIn: 3600 });
+            return jwt;
+        }
+        catch (err)
+        {
+            throw new InternalServerErrorException('validateOAuthLogin', err.message);
+        }
+    }
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByUsername(username);
