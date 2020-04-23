@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'login/success/:jwt', component: LoginSuccessComponent },
   { path: 'login', component: LoginComponent },
 
-  { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) }
+  { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) },
+  { path: 'profile', loadChildren: () => import('./my-profile/my-profile.module').then(m => m.MyProfileModule) }
 ];
 
 @NgModule({

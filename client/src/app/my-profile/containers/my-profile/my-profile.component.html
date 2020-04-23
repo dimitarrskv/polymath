@@ -1,0 +1,19 @@
+<div class="mx-auto mt-20" style="width:600px;">
+    <nz-card class="text-center">
+        <div class="profile-photo bg-gray-200 rounded-full h-32 w-32 mx-auto flex cursor-pointer" (click)="updateProfilePhoto()">
+            <i class="text-3xl mx-auto my-auto" nz-icon nzType="camera" nzTheme="outline"></i>
+        </div>
+        <h2 class="mb-0 mt-6">Dimitar Ruskov</h2>
+    </nz-card>
+</div>
+
+<div class="mx-auto mt-5" style="width:600px;">
+    <nz-card nzTitle="3rd Party Integrations" >
+        <nz-list nzSize="large">
+            <nz-list-item *ngFor="let service of services">
+                <i class="text-3xl" [nzTooltipTitle]="service.displayName" nz-tooltip nz-icon [nzType]="service.key" nzTheme="outline"></i>
+                <a (click)="linkProfile(service.key)">Link Profile</a>
+            </nz-list-item>
+          </nz-list>
+    </nz-card>
+</div>

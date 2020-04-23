@@ -17,6 +17,8 @@ import { LoginComponent } from './login/login.component';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, YoutubeOutline, DribbbleOutline, CameraOutline } from '@ant-design/icons-angular/icons';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 registerLocaleData(en);
 
@@ -26,6 +28,8 @@ export function jwtOptionsFactory() {
       whitelistedDomains: ['localhost:3000']
   };
 }
+
+const icons = [LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, YoutubeOutline, DribbbleOutline, CameraOutline]
 
 @NgModule({
   declarations: [
@@ -40,6 +44,7 @@ export function jwtOptionsFactory() {
     NzLayoutModule,
     NzMenuModule,
     NzButtonModule,
+    NzIconModule.forRoot(icons),
 
     FormsModule,
     HttpClientModule,
