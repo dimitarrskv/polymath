@@ -12,7 +12,7 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async validateOAuthLogin(thirdPartyId: string, provider: 'google'): Promise<string>
+  async validateOAuthLogin(thirdPartyId: string, provider: 'google' | 'linkedin'): Promise<string>
     {
         try 
         {

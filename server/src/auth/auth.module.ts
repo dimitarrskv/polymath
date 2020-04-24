@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { GoogleOAuthStrategy } from './google-oauth.strategy';
+import { LinkedinOAuthStrategy } from './linkedin-oauth.strategy';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { GoogleOAuthStrategy } from './google-oauth.strategy';
     }),
     UsersModule,
   ],
-  providers: [AuthService, LocalStrategy, GoogleOAuthStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, GoogleOAuthStrategy, LinkedinOAuthStrategy, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

@@ -23,7 +23,6 @@ export class AppController {
   @Get('auth/login/google-oauth')
   @UseGuards(AuthGuard('google'))
   async googleLogin(@Request() req) {
-    console.log('kur')
     // initiates the Google OAuth2 login flow
   }
 
@@ -31,13 +30,12 @@ export class AppController {
   @UseGuards(AuthGuard('google'))
   googleLoginCallback(@Request() req, @Response() res)
   {
-      console.log('bur')
-      // handles the Google OAuth2 callback
-      const jwt: string = req.user.jwt;
-      if (jwt)
-          res.redirect(`${this.configService.get('CLIENT_URL')}/login/success/` + jwt);
-      else 
-          res.redirect(`${this.configService.get('CLIENT_URL')}/login/failure/`);
+    // handles the Google OAuth2 callback
+    const jwt: string = req.user.jwt;
+    if (jwt)
+      res.redirect(`${this.configService.get('CLIENT_URL')}/login/success/` + jwt);
+    else 
+      res.redirect(`${this.configService.get('CLIENT_URL')}/login/failure/`);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -46,8 +44,22 @@ export class AppController {
     return req.user;
   }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @UseGuards(AuthGuard('linkedin'))
+  @Get('auth/login/linkedin-oauth')
+  async linkedinLogin(@Request() req) {
+    return this.authService.login(req.user);
+  }
+
+  @UseGuards(AuthGuard('linkedin'))
+  @Get('linkedin-oauth/callback')
+  linkedinLoginCallback(@Request() req, @Response() res)
+  {
+    // handles the Google OAuth2 callback
+    const jwt: string = req.user.jwt;
+    console.log('LinkedIn Logged In')
+    if (jwt)
+      res.redirect(`${this.configService.get('CLIENT_URL')}/profile`);
+    else 
+      res.redirect(`${this.configService.get('CLIENT_URL')}/login/failure/`);
   }
 }
