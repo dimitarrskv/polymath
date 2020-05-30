@@ -21,10 +21,8 @@ export class LinkedinOAuthStrategy extends PassportStrategy(Strategy, 'linkedin'
     {
       try
       {
-        const jwt: string = await this.authService.validateOAuthLogin(profile.id, 'linkedin');
-        const user = { jwt }
 
-        done(null, user);
+        done(null, profile);
       }
       catch(err)
       {

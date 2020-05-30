@@ -12,34 +12,28 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async validateOAuthLogin(thirdPartyId: string, provider: 'google' | 'linkedin'): Promise<string>
+  async validateOAuthLogin(email: string): Promise<string>
     {
         try 
-        {
-            // TODO: add some registration logic here, 
-            // to register the user using their thirdPartyId (in this case their googleId)
-            // let user: IUser = await this.usersService.findOneByThirdPartyId(thirdPartyId, provider);
-            // if (!user)
-                // user = await this.usersService.registerOAuthUser(thirdPartyId, provider);
-                
-            const payload = { thirdPartyId, provider }
+        {       
+          const payload = { email }
 
-            const jwt: string = sign(payload, this.configService.get('JWT_SECRET'), { expiresIn: 3600 });
-            return jwt;
+          const jwt: string = sign(payload, this.configService.get('JWT_SECRET'), { expiresIn: 3600 });
+          return jwt;
         }
         catch (err)
         {
-            throw new InternalServerErrorException('validateOAuthLogin', err.message);
+          throw new InternalServerErrorException('validateOAuthLogin', err.message);
         }
     }
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOneByUsername(username);
-    if (user && user.password === pass) {
-      const { password, ...result } = user;
-      return result;
-    }
-    return null;
+  async validateUser(email: string, pass: string): Promise<any> {
+    // const user = await this.usersService.findOneByEmail(email);
+    // if (user && user.password === pass) {
+    //   const { password, ...result } = user;
+    //   return result;
+    // }
+    // return null;
   }
 
   async login(user: any) {
