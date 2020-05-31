@@ -19,6 +19,7 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, YoutubeOutline, DribbbleOutline, CameraOutline } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { CoreModule } from './core/core.module';
 
 registerLocaleData(en);
 
@@ -57,6 +58,7 @@ const icons = [LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, Yo
       }
     }),
 
+    CoreModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
