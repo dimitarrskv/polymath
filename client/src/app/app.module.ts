@@ -17,7 +17,7 @@ import { LoginComponent } from './login/login.component';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, YoutubeOutline, DribbbleOutline, CameraOutline } from '@ant-design/icons-angular/icons';
+import { LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, YoutubeOutline, DribbbleOutline, CameraOutline, LogoutOutline } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CoreModule } from './core/core.module';
 
@@ -30,7 +30,7 @@ export function jwtOptionsFactory() {
   };
 }
 
-const icons = [LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, YoutubeOutline, DribbbleOutline, CameraOutline]
+const icons = [LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, YoutubeOutline, DribbbleOutline, CameraOutline, LogoutOutline]
 
 @NgModule({
   declarations: [

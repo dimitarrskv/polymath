@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigurationService } from 'src/app/configuration.service';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -35,7 +36,7 @@ export class MyProfileComponent implements OnInit {
     }
   ];
   
-  constructor(private configurations: ConfigurationService) { }
+  constructor(private configurations: ConfigurationService, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -47,7 +48,11 @@ export class MyProfileComponent implements OnInit {
   }
 
   updateProfilePhoto() {
-    alert('TODO: Not Implemented')
+    alert('TODO: Not Implemented') 
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

@@ -7,6 +7,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzButtonModule } from 'ng-zorro-antd';
 
 const routes: Routes = [
   { path: '', component: MyProfileComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
     NzCardModule,
     NzListModule,
     NzIconModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzButtonModule
   ],
   exports: [RouterModule],
   declarations: [MyProfileComponent]
