@@ -74,5 +74,4 @@ export class AuthService {
     return this.http.get(`${this.configurations.baseUrl}/auth/me`);
   }
 
-
 }

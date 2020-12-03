@@ -35,7 +35,8 @@ const icons = [LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, Yo
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+  
   ],
   imports: [
     BrowserModule,

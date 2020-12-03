@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/welcome' },
   { path: 'login/success/:jwt', component: LoginSuccessComponent },
   { path: 'login', component: LoginComponent, canActivate: [UnauthGuard] },
+  { path: 'instagram-oauth/callback', loadChildren: () => import('./instagram-oauth-callback/instagram-oauth-callback.module').then(m => m.InstagramOauthCallbackModule) },
   {
     path: '',
     component: LayoutComponent,

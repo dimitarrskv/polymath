@@ -16,9 +16,9 @@ export class AuthService {
     {
         try 
         {       
-          const payload = { email }
+          const payload = { userId: 1, id: 1, email }
 
-          const jwt: string = sign(payload, this.configService.get('JWT_SECRET'), { expiresIn: 3600 });
+          const jwt: string = sign(payload, this.configService.get('JWT_SECRET'));
           return jwt;
         }
         catch (err)

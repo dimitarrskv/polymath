@@ -32,4 +32,13 @@ export class User {
 
     @Column({ nullable: true })
     twitter: string;
+
+    @Column({ nullable: true })
+    instagram: string;
+
+    @Column({ nullable: true })
+    instagramUserId: string;
+
+    @Column({ nullable: true })
+    instagramAccessToken: string;
 }
