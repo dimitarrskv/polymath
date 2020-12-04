@@ -9,12 +9,22 @@
 
 <div class="mx-auto mt-5" style="width:600px;">
     <nz-card nzTitle="3rd Party Integrations" >
-        <nz-list nzSize="large">
-            <nz-list-item *ngFor="let service of services">
-                <i class="text-3xl" [nzTooltipTitle]="service.displayName" nz-tooltip nz-icon [nzType]="service.key" nzTheme="outline"></i>
-                <a (click)="linkProfile(service.key)">Link Profile</a>
-            </nz-list-item>
-          </nz-list>
+        <nz-skeleton
+          nzType="button"
+          [nzActive]="true"
+          [nzLoading]="!(profile$ | async)">
+            <nz-list nzSize="large">
+                <nz-list-item *ngFor="let service of services">
+                    <i class="text-3xl" [nzTooltipTitle]="service.displayName" nz-tooltip nz-icon [nzType]="service.key" nzTheme="outline"></i>
+                        <ng-container *ngIf="profile$ | async as profile">
+                            <a *ngIf="profile[service.key] as link; else unlinkedProfile" [href]="getHandle(profile[service.key], service.handle)" target="_blank">{{ getHandle(profile[service.key], service.handle) }}</a>
+                            <ng-template #unlinkedProfile>
+                                <a (click)="linkProfile(service.key)">Link Profile</a>
+                            </ng-template>
+                        </ng-container>
+                </nz-list-item>
+            </nz-list>
+        </nz-skeleton>
     </nz-card>
 </div>
 

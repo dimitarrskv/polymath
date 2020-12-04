@@ -42,4 +42,8 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  parseJWT(jwt: string): any {
+    return this.jwtService.decode(jwt);
+  }
 }

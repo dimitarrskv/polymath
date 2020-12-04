@@ -6,6 +6,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { InstagramService } from './auth/instagram.service';
 import { UsersService } from './users/users.service';
+import { LinkedinService } from './auth/linkedin.service';
 
 @Controller()
 export class AppController {
@@ -13,7 +14,8 @@ export class AppController {
     private configService: ConfigService,
     private authService: AuthService,
     private instagramService: InstagramService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private linkedinService: LinkedinService
   ) {}
 
   @Get('welcome')
@@ -23,8 +25,9 @@ export class AppController {
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
-  getProfile(@Request() req) {
-    return req.user;
+  async getProfile(@Request() req) {
+    const user = await this.usersService.findOneByEmail(req.user.email);
+    return user;
   }
 
   @UseGuards(LocalAuthGuard)
@@ -57,16 +60,27 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(AuthGuard('linkedin'))
+  @UseGuards(JwtAuthGuard, AuthGuard('linkedin'))
   @Get('linkedin-oauth/callback')
-  linkedinLoginCallback(@Request() req, @Response() res)
+  async linkedinLoginCallback(@Request() req, @Response() res)
   {
-    // handles the Google OAuth2 callback
-    const jwt: string = req.user.jwt;
-    if (jwt)
-      res.redirect(`${this.configService.get('CLIENT_URL')}/profile`);
-    else 
-      res.redirect(`${this.configService.get('CLIENT_URL')}/login/failure/`);
+    // handles the LinkedIn OAuth2 callback
+
+    // Obtain My Profile
+    try {
+      let response = await this.linkedinService.getMyProfile(req.user.accessToken);
+      console.log(response);
+    } catch (error) {
+      console.error('Obtaining My Profile failed: ', error.response?.data?.error?.message || 'but could not retrieve error message');
+      throw new HttpException('Obtaining My Profile failed', HttpStatus.BAD_REQUEST);
+    }
+
+    const user = await this.usersService.findOneByEmail(req.user.email);
+    user.linkedin = req.user.username;
+
+    this.usersService.update(user);
+
+    res.send({ success: true })
   }
 
   @UseGuards(AuthGuard('instagram'))

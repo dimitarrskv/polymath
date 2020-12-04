@@ -28,6 +28,12 @@ export class User {
     linkedin: string;
 
     @Column({ nullable: true })
+    linkedinUserId: string;
+
+    @Column({ nullable: true })
+    linkedinAccessToken: string;
+
+    @Column({ nullable: true })
     github: string;
 
     @Column({ nullable: true })

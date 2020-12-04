@@ -10,6 +10,7 @@ import { GoogleOAuthStrategy } from './google-oauth.strategy';
 import { LinkedinOAuthStrategy } from './linkedin-oauth.strategy';
 import { InstagramOAuthStrategy } from './instagram-oauth.strategy';
 import { InstagramService } from './instagram.service';
+import { LinkedinService } from './linkedin.service';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { InstagramService } from './instagram.service';
 
     HttpModule
   ],
-  providers: [AuthService, LocalStrategy, GoogleOAuthStrategy, LinkedinOAuthStrategy, InstagramOAuthStrategy, InstagramService, JwtStrategy],
-  exports: [AuthService, JwtStrategy, InstagramService],
+  providers: [AuthService, LocalStrategy, GoogleOAuthStrategy, LinkedinOAuthStrategy, InstagramOAuthStrategy, InstagramService, LinkedinService, JwtStrategy],
+  exports: [AuthService, JwtStrategy, InstagramService, LinkedinService],
 })
 export class AuthModule {}

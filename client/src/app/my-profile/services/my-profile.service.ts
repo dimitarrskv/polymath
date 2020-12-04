@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { ConfigurationService } from 'src/app/configuration.service';
+import { Profile } from '../models/profile.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class MyProfileService {
     private configurations: ConfigurationService
   ) { }
 
-  get profile(): Observable<any> {
+  get profile(): Observable<Profile> {
     let accessToken = this.authService.getToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -26,7 +27,6 @@ export class MyProfileService {
     let params = new HttpParams()
       .set("secret_token", accessToken);
 
-    const url = `${this.configurations.baseUrl}/profile`;
-    return this.http.get<any>(url, { headers, params });
+    return this.http.get<any>(`${this.configurations.baseUrl}/profile`, { headers, params });
   }
 }

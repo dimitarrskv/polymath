@@ -11,9 +11,9 @@ export class LinkedinOAuthStrategy extends PassportStrategy(Strategy, 'linkedin'
     super({
       clientID: configService.get('LINKEDIN_ID'),
       clientSecret: configService.get('LINKEDIN_SECRET'),
-      callbackURL : 'http://localhost:3000/linkedin-oauth/callback',
+      callbackURL : 'http://localhost:4200/linkedin-oauth/callback',
       passReqToCallback: true,
-      scope: ['r_emailaddress', 'r_liteprofile']
+      scope: ['r_emailaddress', 'r_liteprofile'] 
     });  
   }
 
@@ -22,7 +22,7 @@ export class LinkedinOAuthStrategy extends PassportStrategy(Strategy, 'linkedin'
       try
       {
 
-        done(null, profile);
+        done(null, { ...profile, email: request.user.email, accessToken });
       }
       catch(err)
       {

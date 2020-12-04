@@ -20,6 +20,9 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, YoutubeOutline, DribbbleOutline, CameraOutline, LogoutOutline } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CoreModule } from './core/core.module';
+import { NgxsModule } from '@ngxs/store';
+
+import { environment } from '../environments/environment';
 
 registerLocaleData(en);
 
@@ -51,6 +54,8 @@ const icons = [LinkedinOutline, GithubOutline, MediumOutline, TwitterOutline, Yo
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+
+    NgxsModule.forRoot([], { developmentMode: !environment.production }),
 
     JwtModule.forRoot({
       jwtOptionsProvider: {

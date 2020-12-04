@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigurationService } from 'src/app/configuration.service';
 import { AuthService } from 'src/app/auth.service';
-import { MyProfileService } from '../../services/my-profile.service';
+import { Select, Store } from '@ngxs/store';
+import { GetMyProfile, MyProfileState } from '../../state/my-profile.state';
+import { Observable } from 'rxjs';
+import { Profile } from '../../models/profile.model';
 
 @Component({
   selector: 'app-my-profile',
@@ -10,14 +13,19 @@ import { MyProfileService } from '../../services/my-profile.service';
 })
 export class MyProfileComponent implements OnInit {
 
-  services: any[] = [
+  @Select(MyProfileState.profile)
+  profile$: Observable<Profile>;
+  
+  services: { key: string; displayName: string; handle?: string }[] = [
     {
       key: 'instagram',
-      displayName: 'Instagram'
+      displayName: 'Instagram',
+      handle: 'https://www.instagram.com/{key}'
     },
     {
       key: 'linkedin',
-      displayName: 'LinkedIn'
+      displayName: 'LinkedIn',
+      handle: 'https://www.linkedin.com/in/{key}'
     },
     {
       key: 'github',
@@ -44,13 +52,12 @@ export class MyProfileComponent implements OnInit {
   constructor(
     private configurations: ConfigurationService,
     private authService: AuthService,
-    private myProfileService: MyProfileService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    // this.myProfileService.profile.subscribe(_ => {
-    //   debugger;
-    // })
+    this.store.dispatch([new GetMyProfile()]);
+    
   }
 
   linkProfile(serviceKey: string) {
@@ -58,6 +65,10 @@ export class MyProfileComponent implements OnInit {
       case 'instagram': window.open(`${this.configurations.baseUrl}/auth/login/instagram-oauth`,"instagram oauth2","location=1,status=1,scrollbars=1, width=800,height=800"); break;
       case 'linkedin': window.open(`${this.configurations.baseUrl}/auth/login/linkedin-oauth`,"linkedin oauth2","location=1,status=1,scrollbars=1, width=800,height=800"); break;
     }
+  }
+
+  getHandle(key: string, handle: string) {
+    return handle.replace('{key}', key);
   }
 
   updateProfilePhoto() {
