@@ -1,0 +1,28 @@
+<nz-layout>
+    <nz-layout>
+      <nz-header>
+        <div class="logo flex items-center">
+          <a class="tracking-widest text-xl" routerLink="/dashboard">POLYMATH</a>
+        </div>
+        <ul nz-menu nzMode="horizontal" class="header-menu flex justify-end" >
+          <li nz-submenu [nzTitle]="submenuTitle">
+            <ul>
+              <li style="width: 300px;" nz-menu-item [routerLink]="'/profile'">Profile</li>
+              <li nz-menu-divider></li>
+              <li nz-menu-item (click)="authService.logout()">Sign out</li>
+            </ul>
+          </li>
+        </ul>
+      </nz-header>
+      <nz-content>
+        <div class="inner-content">
+            <router-outlet></router-outlet>
+        </div>
+      </nz-content>
+      <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+    </nz-layout>
+</nz-layout>
+
+  <ng-template #submenuTitle>
+    <nz-avatar [nzText]="authService.userDetails.email[0].toUpperCase()" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+  </ng-template>
